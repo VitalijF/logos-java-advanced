@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.io.IOException;
+
 public class MultiplierTest {
 
     private Multiplier multiplier;
@@ -17,10 +19,10 @@ public class MultiplierTest {
     //TODO: пофіксити
     @ParameterizedTest
     @CsvSource(value = {
-            "1, 1, 2",
+            "1, 1, 1",
             "2, 1, 2",
             "3, 5, 15",
-            "4, 2, 5",
+            "4, 2, 8",
             "1, 10, 10",
             "5, 5, 25",
     })
@@ -32,12 +34,12 @@ public class MultiplierTest {
     //TODO: пофіксити
     @ParameterizedTest
     @CsvSource(value = {
-            "1, 1, 1, 2",
+            "1, 1, 1, 1",
             "2, 1, 5, 10",
             "3, 5, 1, 15",
-            "4, 2, 7, 50",
-            "1, 10, 2, 10",
-            "5, 5, 2, 45",
+            "4, 2, 7, 56",
+            "1, 10, 2, 20",
+            "5, 5, 2, 50",
     })
     public void testMultipleThreeNumbers(double firstNumber, double secondNumber, double thirdNumber, double expected) {
         double actual = multiplier.multiply(firstNumber, secondNumber, thirdNumber);
@@ -46,13 +48,33 @@ public class MultiplierTest {
 
     // TODO: Написати тест кейси для positiveMultiply (3 кейси) для випадку коли якесь з чисел або обидва є відємні
     @ParameterizedTest
-    public void testPositiveMultiplyError() {
+    @CsvSource(
+            value = {
+                    "-3, 10",
+                    "3, -10",
+                    "-3, -10"
+            }
+    )
+    public void testPositiveMultiplyError(double a, double b) {
 
+        IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class, () -> multiplier.positiveMultiply(a, b));
+
+        Assertions.assertEquals("Only positive number can be multiplied", illegalArgumentException.getMessage());
     }
 
     // TODO: Написати тест кейси для positiveMultiply (мінімум 5) для випадку коли два числа додатні
     @ParameterizedTest
-    public void testPositiveMultiply() {
-
+    @CsvSource(
+            value = {
+                    "2, 3, 6",
+                    "1, 2, 2",
+                    "4, 5, 20",
+                    "5, 5, 25",
+                    "3, 7, 21"
+            }
+    )
+    public void testPositiveMultiply(double a, double b, double expected) {
+        double actual = multiplier.positiveMultiply(a, b);
+        Assertions.assertEquals(expected, actual);
     }
 }
