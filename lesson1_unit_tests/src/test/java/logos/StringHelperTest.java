@@ -20,10 +20,16 @@ public class StringHelperTest {
     @Test
     void testStringIsNotEmpty() {
 
-        String nullStr = null;
         String emptyStr = "";
 
         Assertions.assertTrue(stringHelper.isEmpty(emptyStr));
+
+    }
+    @Test
+    void testStringIsNotNull() {
+
+        String nullStr = null;
+
         Assertions.assertTrue(stringHelper.isEmpty(nullStr));
 
     }
@@ -59,14 +65,30 @@ public class StringHelperTest {
 
     //Teсткейс або тесткейси для методу getWithoutFirstSecondSymbols() який повинен викинути ексепшин
     @Test
-    void testGetWithoutFirstSecondSymbolsException() {
+    void testGetWithoutFirstSecondSymbolsExceptionNull() {
 
         String nullStr = null;
-        String emptyStr = "";
-        String oneElemStr = "a";
+
+
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> stringHelper.getWithoutFirstSecondSymbols(nullStr));
+
+    }
+
+    @Test
+    void testGetWithoutFirstSecondSymbolsExceptionEmpty() {
+
+        String emptyStr = "";
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> stringHelper.getWithoutFirstSecondSymbols(emptyStr));
+
+    }
+
+    @Test
+    void testGetWithoutFirstSecondSymbolsExceptionOneSymbol() {
+
+        String oneElemStr = "a";
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> stringHelper.getWithoutFirstSecondSymbols(oneElemStr));
 
     }
@@ -87,21 +109,40 @@ public class StringHelperTest {
     }
 
     @Test
-    void testConcatenateTwoStringsWithDelimiterException() {
+    void testConcatenateTwoStringsWithDelimiterExceptionNull() {
+
         String nullStr = null;
+        String str1 = "test";
+
+        IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> stringHelper.concatenateTwoStringsWithDelimiter(str1, nullStr));
+
+        Assertions.assertEquals("Strings must not be empty", illegalArgumentException.getMessage());
+
+    }
+
+    @Test
+    void testConcatenateTwoStringsWithDelimiterExceptionEmpty() {
+
         String emptyStr = "";
+        String str1 = "test";
+
+        IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> stringHelper.concatenateTwoStringsWithDelimiter(str1, emptyStr));
+
+        Assertions.assertEquals("Strings must not be empty", illegalArgumentException.getMessage());
+    }
+
+    @Test
+    void testConcatenateTwoStringsWithDelimiterExceptionIdenticStrings() {
 
         String str1 = "test";
         String str2 = "test";
 
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> stringHelper.concatenateTwoStringsWithDelimiter(str1, nullStr));
-        IllegalArgumentException illegalArgumentExceptionEmpty = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> stringHelper.concatenateTwoStringsWithDelimiter(str1, emptyStr));
-
-        IllegalArgumentException illegalArgumentExceptionEqual = Assertions.assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> stringHelper.concatenateTwoStringsWithDelimiter(str1, str2));
 
-        Assertions.assertNotEquals(illegalArgumentExceptionEmpty.getMessage(), illegalArgumentExceptionEqual.getMessage());
+        Assertions.assertEquals("Strings must be different", illegalArgumentException.getMessage());
     }
+
 }
