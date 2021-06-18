@@ -15,13 +15,11 @@ public class StringHelperTest {
     //Teсткейс або тесткейси для методу isEmpty() який повинен повернути true
     @ParameterizedTest
     @CsvSource(value = {
-            "abc",
-            "'   '",
-            "."
+            "''"
     })
-    void testStringIsNotEmpty(String string) {
+    void testStringIsEmpty(String string) {
         boolean actual = stringHelper.isEmpty(string);
-        Assertions.assertFalse(actual);
+        Assertions.assertTrue(actual);
     }
 
     //Teсткейс або тесткейси для методу isEmpty() який повинен повернути false
@@ -31,7 +29,7 @@ public class StringHelperTest {
             "'   '",
             "."
     })
-    void testStringIsEmpty(String string) {
+    void testStringIsEmptyFalse(String string) {
         boolean actual = stringHelper.isEmpty(string);
         Assertions.assertFalse(actual);
     }
