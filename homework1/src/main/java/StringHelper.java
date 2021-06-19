@@ -1,7 +1,4 @@
-package logos;
-
 public class StringHelper {
-
     private static final String DELIMITER = "_";
 
     /**

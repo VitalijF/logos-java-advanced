@@ -1,5 +1,3 @@
-package logos;
-
 public class Multiplier {
 
     /**
